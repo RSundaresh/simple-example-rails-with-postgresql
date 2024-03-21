@@ -31,3 +31,32 @@ Actions:
       ImageTag: latest
       PublicRepository: true
       ImageScanningConfiguration: true
+    DependsOn:
+      - Build_81
+  Build_81:
+  
+    # Identifies the action. Do not modify this value.
+    Identifier:  aws/build@v1.0.0
+    #Defines the action's properties.
+    Configuration:
+      # Required - Steps are sequential instructions that run shell commands
+      Steps:
+        - Run: ruby -v
+      Container:
+        Registry: DockerHub
+        Image: ruby:alpine3.19
+    Outputs:
+      # Automatically discover reports for popular test frameworks
+      AutoDiscoverReports:
+        Enabled: false
+        # Use as prefix for the report files
+        ReportNamePrefix: rpt
+    Compute:
+      Type: EC2
+
+
+    Environment:
+      Connections:
+        - Role: CodeCatalystWorkflowDevelopmentRole-Beta-space
+          Name: "409132426496"
+      Name: Development
