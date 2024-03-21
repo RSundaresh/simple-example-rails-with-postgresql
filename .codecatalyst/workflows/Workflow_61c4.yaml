@@ -41,15 +41,6 @@ Actions:
       # Required - Steps are sequential instructions that run shell commands
       Steps:
         - Run: ruby -v
-        - Run: sudo apt update
-        - Run: sudo apt install apt-transport-https ca-certificates curl
-            software-properties-common
-        - Run: curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add
-            -
-        - Run: sudo add-apt-repository "deb [arch=amd64]
-            https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
-        - Run: sudo apt update
-        - Run: sudo apt install docker-ce
         - Run: docker build -t public.ecr.aws/i1c2r2b5/rails:'latest' .
         - Run: docker push public.ecr.aws/rails:latest
       Container:
