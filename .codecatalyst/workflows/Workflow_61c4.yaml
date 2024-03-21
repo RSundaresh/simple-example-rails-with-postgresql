@@ -21,7 +21,7 @@ Actions:
       Connections:
         - Role: CodeCatalystWorkflowDevelopmentRole-Beta-space
           Name: "409132426496"
-      Name: Development
+      Name: Staging
     # Specifies the source and/or artifacts to pass to the action as input.
     Inputs:
       # Optional
@@ -30,8 +30,9 @@ Actions:
     Compute:
       Type: EC2 # Defines the action's properties.
     Configuration:
-      Tags: Latest
+      Tags: latest
       RepositoryName: rails
       AWSRegion: us-east-1
-      PublicRepository: false
+      ImageTag: latest
+      PublicRepository: true
       ImageScanningConfiguration: true
