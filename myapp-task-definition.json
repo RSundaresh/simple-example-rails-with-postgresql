@@ -1,0 +1,16 @@
+{
+  "family": "developmentmysfitscjzfwBackEndecsTaskDefE6F2CFC0",
+  "requiresCompatibilities": [
+    "FARGATE"
+  ],
+  "networkMode": "awsvpc",
+  "cpu": "256",
+  "memory": "512",
+  "containerDefinitions": [
+    {
+      "name": "myapp",
+      "image": "myapp:latest",
+      "essential": true
+    }
+  ]
+}
