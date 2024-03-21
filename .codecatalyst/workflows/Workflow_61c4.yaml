@@ -12,6 +12,10 @@ Actions:
   PushToAmazonECR_06:
     # Identifies the action. Do not modify this value.
     Identifier: codecatalyst-labs/push-to-ecr@v1.0.3
+    Outputs:
+      AutoDiscoverReports:
+        Enabled: true
+        ReportNamePrefix: rptecr
     # Required; You can use an environment, AWS account connection, and role to access AWS resources.
     Environment:
       Connections:
@@ -28,5 +32,6 @@ Actions:
     Configuration:
       Tags: Latest
       RepositoryName: rails
+      AWSRegion: us-east-1
       PublicRepository: false
-      ImageScanningConfiguration: false
+      ImageScanningConfiguration: true
