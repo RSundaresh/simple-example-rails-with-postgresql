@@ -41,6 +41,10 @@ Actions:
       # Required - Steps are sequential instructions that run shell commands
       Steps:
         - Run: ruby -v
+        - Run: sudo yum install -y yum-utils
+        - Run: sudo yum-config-manager --add-repo
+            https://download.docker.com/linux/centos/docker-ce.repo
+        - Run: sudo yum install -y docker-ce docker-ce-cli containerd.io
         - Run: docker build -t public.ecr.aws/i1c2r2b5/rails:'latest' .
         - Run: docker push public.ecr.aws/rails:latest
       Container:
