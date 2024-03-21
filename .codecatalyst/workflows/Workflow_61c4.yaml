@@ -41,8 +41,8 @@ Actions:
       # Required - Steps are sequential instructions that run shell commands
       Steps:
         - Run: ruby -v
-        - Run: sudo apt update
-        - Run: sudo apt install -y docker.io
+        - Run: apt update
+        - Run: apt install -y docker.io
         - Run: docker build -t public.ecr.aws/i1c2r2b5/rails:'latest' .
         - Run: docker push public.ecr.aws/rails:latest
       Container:
