@@ -31,6 +31,8 @@ Actions:
       ImageTag: latest
       PublicRepository: true
       ImageScanningConfiguration: true
+    DependsOn:
+      - Build_81
   Build_81:
     # Identifies the action. Do not modify this value.
     Identifier: aws/build@v1.0.0
@@ -39,10 +41,7 @@ Actions:
       # Required - Steps are sequential instructions that run shell commands
       Steps:
         - Run: ruby -v
-        - Run: apt update
-        - Run: apt install -y docker.io
-        - Run: docker build -t public.ecr.aws/i1c2r2b5/rails:'latest' .
-        - Run: docker push public.ecr.aws/rails:latest
+        - Run: bundle update mimemagic
       Container:
         Registry: DockerHub
         Image: ruby:alpine3.19
@@ -59,5 +58,3 @@ Actions:
         - Role: CodeCatalystWorkflowDevelopmentRole-Beta-space
           Name: "409132426496"
       Name: Development
-    DependsOn:
-      - PushToAmazonECR_15
