@@ -31,8 +31,6 @@ Actions:
       ImageTag: latest
       PublicRepository: true
       ImageScanningConfiguration: true
-    DependsOn:
-      - Build_81
   Build_81:
     # Identifies the action. Do not modify this value.
     Identifier: aws/build@v1.0.0
@@ -61,3 +59,5 @@ Actions:
         - Role: CodeCatalystWorkflowDevelopmentRole-Beta-space
           Name: "409132426496"
       Name: Development
+    DependsOn:
+      - PushToAmazonECR_15
