@@ -25,7 +25,7 @@ RUN mkdir /app
 WORKDIR /app
 
 # Copy Gemfile, Gemfile.lock, and package.json to the working directory
-COPY Gemfile Gemfile.lock package.json ./
+COPY Gemfile package.json ./
 
 # Install Bundler and project dependencies
 RUN gem install bundler:2.1.4
