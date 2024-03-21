@@ -31,3 +31,24 @@ Actions:
       ImageTag: latest
       PublicRepository: true
       ImageScanningConfiguration: true
+  DeployToAmazonECS_65:
+    # Identifies the action. Do not modify this value.
+    Identifier: aws/ecs-deploy@v1.0.5 # Defines the action's properties.
+    Configuration:
+      task-definition: myapp-task-definition.json
+      service: TestService
+      cluster: DevCluster
+      region: us-east-1
+    # Required; You can use an environment, AWS account connection, and role to access AWS resources.
+    Environment:
+      Connections:
+        - Role: CodeCatalystWorkflowDevelopmentRole-Beta-space
+          Name: "409132426496"
+      Name: Staging
+    DependsOn:
+      - PushToAmazonECR_15
+    # Specifies the source and/or artifacts to pass to the action as input.
+    Inputs:
+      # Optional
+      Sources:
+        - WorkflowSource # This specifies that the action requires this Workflow as a source
