@@ -34,14 +34,18 @@ Actions:
     DependsOn:
       - Build_81
   Build_81:
-  
     # Identifies the action. Do not modify this value.
-    Identifier:  aws/build@v1.0.0
+    Identifier: aws/build@v1.0.0
     #Defines the action's properties.
     Configuration:
       # Required - Steps are sequential instructions that run shell commands
       Steps:
         - Run: ruby -v
+        - Run: docker buildx install
+        - Run: docker buildx create --name mybuilder --use
+        - Run: docker buildx inspect --bootstrap
+        - Run: docker buildx build --platform linux/amd64,linux/arm64 -t rails:latest .
+        - Run: docker push public.ecr.aws/rails:latest
       Container:
         Registry: DockerHub
         Image: ruby:alpine3.19
@@ -53,8 +57,6 @@ Actions:
         ReportNamePrefix: rpt
     Compute:
       Type: EC2
-
-
     Environment:
       Connections:
         - Role: CodeCatalystWorkflowDevelopmentRole-Beta-space
