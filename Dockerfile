@@ -1,30 +1,41 @@
+# Use the official Ruby image from Docker Hub
 FROM ruby:2.6.6
 
-# Install yarn and postgresql client
-ADD https://dl.yarnpkg.com/debian/pubkey.gpg /tmp/yarn-pubkey.gpg
-RUN apt-key add /tmp/yarn-pubkey.gpg && rm /tmp/yarn-pubkey.gpg
-RUN echo 'deb http://dl.yarnpkg.com/debian/ stable main' > /etc/apt/sources.list.d/yarn.list
-RUN apt-get update && apt-get install -qq -y --no-install-recommends build-essential libpq-dev curl
-RUN curl -sL https://deb.nodesource.com/setup_6.x | bash -
-RUN apt-get update && apt-get install -qq -y --no-install-recommends nodejs yarn postgresql-client
+# Install system dependencies
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+    build-essential \
+    libpq-dev \
+    curl \
+    gnupg2 \
+    && rm -rf /var/lib/apt/lists/*
 
-# Install dependencies
+# Install Node.js and Yarn
+RUN curl -sL https://deb.nodesource.com/setup_16.x | bash - \
+    && curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \
+    && echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list \
+    && apt-get update \
+    && apt-get install -y --no-install-recommends \
+    nodejs \
+    yarn \
+    && rm -rf /var/lib/apt/lists/*
+
+# Create and set the working directory
 RUN mkdir /app
 WORKDIR /app
 
-COPY Gemfile /app/Gemfile
-COPY Gemfile.lock /app/Gemfile.lock
-COPY package.json /app/package.json
+# Copy Gemfile, Gemfile.lock, and package.json to the working directory
+COPY Gemfile Gemfile.lock package.json ./
 
+# Install Bundler and project dependencies
 RUN gem install bundler:2.1.4
-RUN bundle install
+RUN bundle install --jobs "$(nproc)" --retry 5
 
-COPY . /app
+# Copy the rest of the application code to the working directory
+COPY . .
 
-RUN yarn
-
-
-# Expose and run server on port 3000
+# Expose port 3000 for the Rails server
 EXPOSE 3000
 
-CMD ["rails", "server", "-b", "0.0.0.0"] 
+# Command to start the Rails server
+CMD ["rails", "server", "-b", "0.0.0.0"]
