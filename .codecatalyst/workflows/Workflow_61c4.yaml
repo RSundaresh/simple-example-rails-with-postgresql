@@ -35,8 +35,8 @@ Actions:
     Identifier: aws/ecs-deploy@v1.0.5 # Defines the action's properties.
     Configuration:
       task-definition: myapp-task-definition.json
-      service: development-mysfitscjzfwBackEnd-fargateServiceCBEE2F3B-yLSd08TD6VYz
-      cluster: development-mysfitscjzfwBackEnd-EcsCluster97242B84-5bryuIGr99JF
+      service: TestECS
+      cluster: ECSDevCluster
       region: us-west-2
     # Required; You can use an environment, AWS account connection, and role to access AWS resources.
     Environment:
