@@ -32,7 +32,6 @@ Actions:
       PublicRepository: true
       ImageScanningConfiguration: true
   DeployToAmazonECS_65:
-    # Identifies the action. Do not modify this value.
     Identifier: aws/ecs-deploy@v1.0.5 # Defines the action's properties.
     Configuration:
       task-definition: myapp-task-definition.json
